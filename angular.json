@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "PWS"
+    }
+  },
+  "defaultProject": "PWS",
+  "cli": {
+    "analytics": false
+  }
 }

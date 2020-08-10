@@ -1,0 +1,39 @@
+table{
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+
+thead
+{
+  background-color: #4CAF50;
+  color: white;
+}
+td,th{
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tbody tr{
+  cursor: pointer;
+}
+tbody tr:hover{
+  background-color: lightgray;
+}
+.ssid{
+  width: 60%;
+}
+
+.selected {
+  background-color: coral;
+  color: white;
+}
+
+
+
+
+
+
+
+

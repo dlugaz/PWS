@@ -1,0 +1,38 @@
+<p *ngIf="message">{{message}}</p>
+
+<div *ngIf="current">
+  <span>Połączono z siecią {{saved.ssid}}</span>
+</div>
+
+<div *ngIf="saved">
+<span>Zapisana sieć {{saved.ssid}} hasło {{saved.password}} </span>
+  <button (click)="onForget()">Zapomnij</button>
+  <button (click)="onConnect">Połącz</button>
+</div>
+
+
+<div *ngIf="stations.length > 0" >
+<table class="networkList" >
+  <thead>
+  <tr><th>SSID</th><th>Signal</th></tr>
+  </thead>
+<tbody>
+  <tr *ngFor="let station of stations"
+      (click)="onStationClick(station)"
+      [class.selected]="station === selectedStation"
+      >
+    <td class="ssid">{{station.ssid}} </td><td class="signal">{{station.signal}}</td></tr>
+</tbody>
+</table>
+
+
+<br>
+
+<input #password class="form__field" placeholder="Password" required />
+<br><br>
+<button  (click)="onScan()">Skanuj</button>
+<button *ngIf="selectedStation" (click)="onSave(password.value)">Zapisz</button>
+
+</div>
+
+
