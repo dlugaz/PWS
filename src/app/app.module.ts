@@ -9,6 +9,7 @@ import { ControlComponent } from './control/control.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { UpdateComponent } from './update/update.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TasksComponent } from './tasks/tasks.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
