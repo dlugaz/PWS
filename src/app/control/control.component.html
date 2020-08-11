@@ -1,21 +1,25 @@
-<form method="POST">
-  <p> Status Pompy </p>
-  <button class="button" type="submit" name="Water" value="%s">%s</button><br>
-  <label for="Pump_Power">Moc Pompy [0-100%%]</label><br>
-  <input onchange="this.form.submit()" name="Pump_Power" type="number" min="0" max="100" value="%d">
-  <br>
-</form>
-<form method="POST">
-  <p> Wykonywanie zadan: </p>
-  <button class="button" type="submit" name="Tasks" value="%s">%s</button><br>
-</form>
-<br>
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>"
-<script>
+<div *ngIf="processValues">
+<div id="control">
+<p> Status Pompy </p>
+  <button (click)="onWateringStart()">{{tasksText}}</button><br>
+  <label for="power">Moc Pompy [1-100%]</label><br>
+  <input #power class="slider" type="range" min="1" max="100" id="power" (change)="onPowerChange(power.valueAsNumber)">
+</div>
 
-</script>
+
+<div id="tasks">
+  <br>
+  <p> Wykonywanie zadan: </p>
+  <button (click)="onTaskClick()" >{{tasksText}}</button><br>
+<br>
+</div>
+
+
 <div id="process_values">
-  Poziom w zbiorniku [l] %.1f<br>
-  Przepompowano wody [l] %.1f<br>
-  Przeplyw wody [l/min] %.1f<br>
-  Czas uruchomienia [s] %d<br>
+  Poziom w zbiorniku [l] {{processValues.waterLevel_L}}<br>
+  Przepompowano wody [l] {{processValues.waterPumped_L}}<br>
+  Przeplyw wody [l/min] {{processValues.waterFlow_Lpermin}}<br>
+  Czas uruchomienia [s] {{processValues.timeOn_s}}<br>
+</div>
+</div>
+<p *ngIf="message">{{message}}</p>

@@ -29,7 +29,7 @@ export class WifiStationsService {
     return this.http.post(this.apiUrl, {ssid: `${(AP.ssid)}`, password: `${(AP.password)}`});
   }
   getStatus(): Observable<any>{
-    return this.http.get<WifiStation>(this.apiUrl + 'status');
+    return this.http.get<WifiStation>(this.apiUrl + '/status');
   }
   connect(): void{
     this.http.get(this.apiUrl + '/connect');

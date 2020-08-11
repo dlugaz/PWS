@@ -22,11 +22,14 @@ export class WifiScanComponent implements OnInit {
 
   ngOnInit(): void {
     this.onScan();
-    // this.refreshStatus();
+    setInterval(() => {
+      this.refreshStatus();
+    }, 1000);
   }
 
   refreshStatus(): void{
-    this.stationsService.getStatus().subscribe(data => {
+    this.stationsService.getStations().subscribe(data => {
+      this.saved = data.saved;
       this.current = data.current;
     });
   }
