@@ -1,28 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {VariablesService} from '../variables.service';
+import {Process} from '../process';
 
-class Process {
-  wateringOn: boolean;
-  pumpOn: boolean;
-  tasksOn: boolean;
-  pumpSpeedSetpoint: number;
-  pumpSpeedCurrent: number;
-  timeOn_s: number;
-  waterLevel_L: number;
-  waterFlow_Lpermin: number;
-  waterPumped_L: number;
-   // bool watering_on = false;
-  // bool pump_on = false;
-  // bool tasks_on = true;
-  // int pump_speed = 100;   //[%] pump current setpoint
-  // int pump_speed_ramp = 0; //[%] pump current power
-  // int pump_on_time_s = 0;
-  // float water_level_L;
-  // float water_flow_L_per_min;
-  // float water_pumped;
-  // float water_amount_when_started;
-
-}
 const onText = `Załączone`;
 const offText = `Wyłączone`;
 
@@ -37,9 +16,11 @@ export class ControlComponent implements OnInit {
 
   constructor(private service: VariablesService) { }
 
+  // processValues: Process = new Process();
+  // setpoints: Process = new Process();
+
   processValues: Process = new Process();
   setpoints: Process = new Process();
-
 
   wateringText: string;
   tasksText: string;
@@ -48,36 +29,46 @@ export class ControlComponent implements OnInit {
   private pumpPowerSetpoint: number;
   private wateringOnSetpoint: boolean;
   private tasksOnSetpoint: boolean;
-  message: string;
+  message = `Wczytywanie danych...`;
 
 
   ngOnInit(): void {
-    this.message = `Wczytywanie danych...`;
-    setInterval(() => {
-      this.refreshStatus();
-    }, 1000);
+    // setInterval(() => {
+    //   this.refreshStatus();
+    // }, 1000);
+    this.refreshStatus();
     this.service.getVariables();
   }
 
   refreshStatus(): void {
     this.service.getVariables().subscribe(value => {
-      this.processValues = value.process;
-      this.wateringText = (this.processValues.wateringOn) ? onText : offText;
-      this.tasksText = (this.processValues.tasksOn) ? onText : offText;
+      this.processValues = value.Process;
+      // if (!this.setpoints){ this.setpoints = this.processValues; }
+      console.log(this.processValues);
+      if (this.processValues) {
+        this.wateringText = (this.processValues && this.processValues.wateringOn) ? onText : offText;
+        this.tasksText = (this.processValues && this.processValues.tasksOn) ? onText : offText;
+        this.message = null;
+      }
 
     });
   }
 
 
   onWateringStart(): void {
-  this.wateringOnSetpoint = !this.processValues.wateringOn;
+  this.setpoints.wateringOn = !this.processValues.wateringOn;
+  console.log(this.setpoints);
+  this.service.setVariable(this.setpoints).subscribe();
   }
 
   onTaskClick(): void {
-    this.tasksOnSetpoint = !this.processValues.tasksOn;
+    this.setpoints.tasksOn = !this.processValues.tasksOn;
+    this.service.setVariable(this.setpoints).subscribe();
   }
 
   onPowerChange(valueAsNumber: number): void {
     this.setpoints.pumpSpeedSetpoint = valueAsNumber;
+    this.service.setVariable(this.setpoints).subscribe();
+
   }
 }
